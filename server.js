@@ -6,15 +6,25 @@ import connectCloudinary from "./config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
 import doctorRoute from "./routes/doctorRoute.js";
 import userRoute from "./routes/userRoute.js";
+
 const app = express();
+
+// Connect to MongoDB and Cloudinary
 connectDB();
 connectCloudinary();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
-//api endpoints
+
+// API endpoints
 app.use('/api/admin', adminRouter);
 app.use('/api/doctor', doctorRoute);
 app.use('/api/user', userRoute);
-app.listen(5000, () => {
-    console.log("Server is running" + ` http://localhost:5000`);
-})
+
+// Set the port dynamically using the environment variable
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
